@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="dirPrac">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body ng-controller="mainCtrl">
+        <test-dir info="user2" other-param="Hello, World" greet="sayName(message)"></test-dir> 
+        <test-dir info="user2" other-param="Hello, Earth" greet="sayName(message)"></test-dir>                     
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
+    <script src="./app.js"></script>
+    <script src="./mainCtrl.js"></script>
+    <script src="./mainSrvc.js"></script>
+    <script src="./testDir.js"></script>
+</html>
