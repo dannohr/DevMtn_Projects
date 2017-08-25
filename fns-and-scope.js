@@ -6,6 +6,14 @@ var name = 'Tyler';
 
   //Code Here
 
+function isTyler (name){
+  if (name === "Tyler") {
+    return true;
+  }
+  else{return false}
+
+}
+
 //////////////////PROBLEM 2////////////////////
 
 
@@ -14,6 +22,13 @@ var name = 'Tyler';
 
   //Code Here
 
+function getName() {
+
+  var name = prompt("Enter your name:");
+
+  return name;
+
+}
 
 //////////////////PROBLEM 3////////////////////
 
@@ -23,6 +38,12 @@ var name = 'Tyler';
 //then alerts "Welcome, " plus whatever the users name is.
 
   //Code Here
+
+  function welcome () {
+    alert("Welcome, " + getName());
+  }
+
+  welcome();
 
 
 //////////////////PROBLEM 4////////////////////
@@ -34,6 +55,8 @@ var name = 'Tyler';
 
   //Answer Here
 
+  // Parameters are the inputs to the fuction, enclosed in parenthesis after the function name
+  // Arguements are the values you pass to the parameters when you run the function
 
 //////////////////PROBLEM 5////////////////////
 
@@ -44,7 +67,15 @@ var name = 'Tyler';
 
   //Answer Here
 
+  // There are 6 falsy values:
+  //     1- null
+  //     2- NaN
+  //     3- 0
+  //     4- false
+  //     5- ""
+  //     5- undefined
 
+  //     You can check is something is false by using:  if(!something)
 
 //////////////////PROBLEM 6////////////////////
 
@@ -54,13 +85,21 @@ var name = 'Tyler';
 
   //Code Here
   
+  function myName(){
+    return "Dan Nohr";
+  }
 
 
 //Now save the function definition of myName into a new variable called newMyName
 
   //Code Here
 
+  var newMyName = myName();
+
 //Now alert the result of invoking newMyName
+
+  alert (newMyName);
+
 
 
 
@@ -72,8 +111,17 @@ var name = 'Tyler';
 
   //Code Here
 
+  var outerFn = function() {
+    return('Dan Nohr');
+  };
+ 
+
 //Now save the result of invoking outerFn into a variable called innerFn.
 
   //Code Here
 
+  var innerFn = outerFn;
+
 //Now invoke innerFn.
+
+innerFn;
