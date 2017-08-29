@@ -1,15 +1,20 @@
 //We're in a job interview. Answer the following questions (try to not look at your notes unless you have to).
   // 1) What is the purpose of the 'this keyword'?
 
-      //Answer
+      //Answer  -  
 
   // 2) What are the four rules that govern what the 'this keyword' is bound to and describe each?
 
-      //Answer
+      //Answer  1 - When a function is contained in the global scope, the value of this inside of that function will be the window object.
+      //        2 - When a function is called by a preceding dot, the object before that dot is this.
+      //        3 - When a constructor function is used, this refers to the specific instance of the object that is created and returned 
+      //            by the constructor function.
+      //        4 - When JavaScript’s call or apply method is used, this is explicitly defined.
 
   // 3) What does .bind do?
 
-      //Answer
+      //Answer - Use bing to call a function and explicity define what "this" is.
+
 
 
 //Next Problem
@@ -21,8 +26,17 @@
 
     //Code Here
 
+    var user = {
+      username: 'dnohr',
+      email: 'dnohr@gmail.com',
+      getUsername: function () {
+        return this.username
+      }
+    }
+
 //Now, invoke the getUsername method and verify you got the username of the object and not anything else.
 
+console.log(user.getUsername())
 
 //Next Problem
 
@@ -31,6 +45,16 @@
 
   //Function Invocations Here
 
+  function Car(make, model, year) {
+    this.make = make;
+    this.model = model;
+    this.year = year;
+    this.move = 0;
+    this.moveCar = function(){
+      return this.move += 10;
+    }
+  }
+
 var prius = new Car('Toyota', 'Prius', 2011);
 var mustang = new Car('Ford', 'Mustang', 2013);
 
@@ -38,8 +62,6 @@ var mustang = new Car('Ford', 'Mustang', 2013);
 
 prius.moveCar(); //increments prius' move property by 10. Returns the new move property.
 mustang.moveCar(); //increments mustang' move property by 10. Returns the new move property.
-
-
 
 //Continuation of previous problem
 
@@ -54,9 +76,11 @@ var getYear = function(){
 
 //Note(no tests)
   //Code Here
-
-
-
+  var getPriusYear = getYear.bind(prius);
+  var getMustangYear = getYear.bind(mustang);
+  console.log(getPriusYear())
+  console.log(getMustangYear())
+  
 //New Problem
 
 var myUser = {
@@ -69,15 +93,17 @@ var getMyUsername = function() {
  return this.username;
 };
 
-var userName = getMyUsername(); //Fix this
+// var userName = getMyUsername(); //Fix this
+  var userName = getMyUsername.call(myUser);
+
+console.log(userName())  
 
 //Above you're given an object, and  a function. What will the getMyUsername function return?
-//Note(no tests)
-  //Answer Here
+  //   It will return the username for the calling object, the object it's bound to.
 
 //In the example above, what is the 'this keyword' bound to when getMyUsername runs?
 
-  //Answer Here
+  //Answer Here  - It is bound to the myUser object
 
 
 //Fix the getMyUsername invocation (stored in the userName variable, at the bottom of the above code) so that userName will be equal to 'iliketurtles'.
