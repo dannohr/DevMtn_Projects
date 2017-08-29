@@ -5,7 +5,9 @@ var arr = [10,20,30];
 //Create a function named 'first' that is given 'arr' as the argument and  returns the first item in the given array.
 
   //Code Here
-
+function first (arr) {
+  return arr[0];
+}
 
 //Next problem
 
@@ -16,7 +18,9 @@ var arr = [40,50,60];
 
 
   //Code Here
-
+  function last (arr) {
+    return arr[arr.length-1];
+  }
 
 //Next Problem
 
@@ -25,6 +29,12 @@ var family = ['Tyler', 'Jordyn', 'Ryan', 'Chelsey', 'Ireland'];
 //Create a function named 'looper' that is given family as it's only argument, loops through the given array, and alerts every item in the array.
 
   //Code Here
+function looper (fam){
+  
+  for(var i = 0; i < fam.length; i++) {
+    alert(fam[i]);
+  }
+}
 
 
 //Next problem
@@ -35,7 +45,12 @@ var letters = ['A', 'B', 'C', 'D', 'E'];
 //Write a function called reversedLooper that is given letters as it's only argument and loops through the given array backwards alerting every item in the array starting at the end.
 
   //Code Here
-
+function reversedLooper (arr) {
+  for (i=arr.length-1; i >= 0; i--)
+    {
+      alert(arr[i]);
+    }
+}
 
 //Next Problem
 
@@ -44,11 +59,15 @@ var nums = [1,2,3,6,22,98,45,23,22,12];
 //Write a function named evenFinder that is given nums as it's only argument and removes all values that aren't even from the given array.
 
   //Code Here
+function evenFinder (num) {
 
-
-
-
-  
+  for (i=num.length-1; i >= 0; i--) {
+      if (num[i]%2 != 0) {
+        num.splice(i,1);
+      }
+    }
+    return num;
+}
 
 
 
@@ -57,9 +76,6 @@ var nums = [1,2,3,6,22,98,45,23,22,12];
 // EXTRA PRACTICE PROBLEMS BELOW
 // =============================================
 // =============================================
-
-
-
 
 
 
@@ -73,6 +89,26 @@ var numbersArray = [1,2,34,54,55,34,32,11,19,17,54,66,13];
 
 
   //Code Here
+
+function divider (arr){
+  var newArr = [[],[] ];
+
+  for (i=0; i<arr.length; i++){
+    
+    if (arr[i]%2 === 0) {
+      newArr[0].push(arr[i])
+    }
+    
+    else {
+      newArr[1].push(arr[i])
+    }
+
+  }
+  console.log(newArr);
+  return(newArr);
+
+}
+
 
 
 //Next Problem
@@ -89,7 +125,14 @@ var getRandomArbitrary = function() {
   //Code Here
 
 
-
+function finder (num) {
+  if (num.includes(getRandomArbitrary())) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
 
 //Next Problem
 
@@ -115,28 +158,52 @@ var myGroceryList = ['chips', 'pizza', 'hotpockets', 'MtnDew', 'corndogs'];
 //removeItem(myGroceryList, 'chips') --> ['pizza', 'hotpockets', 'MtnDew', 'corndogs'];
 //addItem(myGroceryList, 'Jerky') --> ['pizza', 'hotpockets', 'MtnDew', 'corndogs', 'Jerky'];
 
+function removeItem (list, item) {
+  if (list.includes(item)) {
+    var toDel =  list.indexOf(item);
+    list.splice( toDel, 1 );
+  }
+  return list;
+}
 
+function addItem (list,item) {
+    list.push(item);
+    return list;
+}
 
 //Next Problem
-
 
 
 //Write a function called maker that creates an array, fills that array with numbers from 1 to 215, then returns the array.
 
   //Code Here
-
+function maker () {
+  var newArr = [];
+  for (i=1; i<=215; i++){
+    newArr.push(i);
+  }
+  return newArr;
+}
 
 
 //Next Problem
 
 
-var numbers = [5, '9', 16, 19, '25', '34', 48];
+var numbers = [5, '9', 16, 19, '25', '34', 48, NaN];
 //Write a function called addTen that is given 'numbers' as it's only argument and returns a new
 //array after adding ten to each item in numbers. *Verify your answer is correct. --> [15, 19, 26, 29, 35, 44, 58]
 
-  //Code Here
-
-
+//   //Code Here
+function addTen (arr) {
+ var newArr = [];
+   for (i=0; i<=arr.length; i++) {
+      if (arr[i]) {
+            newArr.push(parseInt(arr[i]) + 10);
+        }   
+      }
+    return newArr;
+}
+addTen(numbers);
 
 //Next Problem
 
@@ -157,6 +224,17 @@ for(var i = 0; i < num2; i++){
 
   //Code Here
 
+ function longer(arr1, arr2) {
+
+  if (arr1.lengh <= arr2.length) {
+    return arr1;
+  }
+  
+  else {return arr2;}
+  
+
+ } 
+
 
 /*
 As a continuation of the previous problem, write another function called 'both'.
@@ -170,7 +248,22 @@ Example: var arr1 = [1,2,3,4]; var arr2 = [2,4,5,6]; newArray // [2,4]
 
   //Code Here
 
+  function both (arr1, arr2) {
+      
+      var newArr = [];
 
+      for (i=0; i<arr1.length; i++) {
+        if (arr2.includes(arr1[i])) {
+          newArr.push(arr1[i])
+        }
+      }
+      console.log(newArr);
+      return newArr;
+  }
+
+  var arr1 = [1,2,3,4];
+  var arr2 = [2,4,5,6];
+  both(arr1,arr2);
 
 
 //NEXT PROBLEM
@@ -210,11 +303,14 @@ sure that it's equal to 4. */
 
   //Code Here
 
+var devMountainEmployees = [tyler, cahlan, ryan, colt];
+console.log(devMountainEmployees);
+
 /*Now let's say Cahlan has a mental breakdown and has to take a leave of absence to 'find himself'.
 Loop through your devMountainEmployees until you find cahlan, then remove him from the array.*/
 
   //Code Here
-
+devMountainEmployees.splice(1,1);
 
 
 
@@ -226,6 +322,7 @@ of Data is to have an Array full of objects. */
 
 //Create an empty array called users.
 
+var users = [];
   //Code Here
 
 /*Now add three user objects to your users array. Each user object should contain the
@@ -239,6 +336,23 @@ var user1 = {
     username: 'infiniateLoop'
 };
 
+var user2 = {
+  name: 'Mike McGinnis',
+  email: 'Mikemcginnis33@gmail.com',
+  password: 'iHateJavaScript',
+  username: '2infiniateLoop'
+};
+
+var user3 = {
+  name: 'Joe McGinnis',
+  email: 'joemcginnis33@gmail.com',
+  password: 'iMostLoveJavaScript',
+  username: 'infinddiateLoop'
+};
+
+users = [user1,user2,user3];
+console.log(users);
+
 //Your Code Here
 
 /*Now you have a very common data structure. Twitter is a good use case.
@@ -250,5 +364,14 @@ objects until you find Tyler's account (use tylermcginnis33@gmail.com to find hi
 Once you find the particular index he's located in, delete him from the array.*/
 
   //Code Here
+
+  for (i=0; i<= users.length; i++) {
+    if (users[i]["email"] === 'tylermcginnis33@gmail.com') {
+      users.splice(i,1);
+      console.log(users[i])
+    }
+  }
+
+  console.log(users)
 
 //The activity we just did is very much how data works in 'the real world'.
