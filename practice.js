@@ -5,10 +5,12 @@
 
   //Code here
 
+  var me = {
+      name: "Dan",
+      age: 37
+  };
 
-
-
-
+  // alert(me.name);
 
 //NEXT PROBLEM
 
@@ -19,9 +21,15 @@
 
   //Code here
 
+  var favoriteThings = {
+    band: "music",
+    food: "steak",
+    person: "mom",
+    book: "javascript for dummies",
+    movie: "star wars",
+    holiday: "Christmas"
 
-
-
+  }
 
 
 
@@ -29,6 +37,10 @@
 
   //Code here
 
+    favoriteThings.car = "Toyota";
+    favoriteThings.brand = "Nike";
+
+    console.log(favoriteThings);
 
 
 
@@ -37,13 +49,13 @@
 
   //Code here
 
+    favoriteThings.food = 'Chicken Nuggets';
+    favoriteThings.book = 'Harry Potter';
 
-
+  console.log(favoriteThings);
 
 
 //NEXT PROBLEM
-
-
 
 /* 
 Create an empty Object called backPack. Now, create a variable called 'item'
@@ -57,16 +69,16 @@ that is named color, with the value being the color of your backpack.
 
   //Code here
 
+  var backPack = {};
+  var item = "firstPocket";
 
-
-
-
+  backPack[item] = "chapstick";
+  backPack.color = "red"
 
 //After you do the above, alert your entire backPack object.
 
   //Code here
-
- 
+// alert(JSON.stringify(backPack));
 
 /*
 You probably noticed that it just alerted [object Object].
@@ -76,14 +88,9 @@ Instead, console.log your whole backPack object and then check out the console.
 
   //Code here
 
-
-
-
+  console.log(backPack);
 
 //NEXT PROBLEM
-
-
-
 
 var user2 = {
         name: 'Ty',
@@ -98,9 +105,8 @@ var user2 = {
 
   //Code Here
 
-
-
-
+  user2.name = 'Tyler S. McGinnis';
+  user2.email = 'tyler.mcginnis@devmounta.in';
 
 // =============================================
 // =============================================
@@ -108,20 +114,12 @@ var user2 = {
 // =============================================
 // =============================================
 
-
-
-
-
-
 //NEXT PROBLEM
-
 
 //Create an empty object called methodCollection.
 
   //Code Here
-
-
-
+var methodCollection = {};
 
 /*
 Now add two methods (functions that are properties on objects) to your methodCollection
@@ -131,43 +129,48 @@ object. One called 'alertHello' which alerts 'hello' and another method called l
 
   //Code Here
 
+  methodCollection.alertHello = function() {alert("hello");}
 
-
+  methodCollection.logHello = function() {console.log("hello")}
 
 
 //Now call your alertHello and logHello methods.
 
   //Code Here
-
-
-
-
-
-
-
+  methodCollection.alertHello();
+  methodCollection.logHello();
 
 //NEXT PROBLEM
-
-
 
 // Create a function called makePerson which takes in name, birthday, ssn as its
 // parameters and returns a new object with all of the information that you passed in.
 
   //Code Here
 
+function makePerson(name, bday, ssn) {
 
+  var newObj = {name: name,
+                birthday: bday,
+                ssn: ssn}
 
+  console.log(newObj);
+  return newObj;
+}
 
-
-  
-
+makePerson("Dan","3-27-80","123-45-6789")
 
 //NEXT PROBLEM
-
-
 
 // Create a function called makeCard which takes in cardNumber, expirationDate, and securityCode to make a Credit Card object and returns that object so that whenever you invoke makeCard, you get a brand new credit card.
 
   //Code Here
+  function makeCard(cardNumber, exp, securityCode){
+
+    return {
+      cardNumber: cardNumber,
+      expirationDate: exp,
+      securityCode: securityCode
+    }
+  }
 
 
