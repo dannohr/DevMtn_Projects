@@ -23,10 +23,7 @@ angular.module('quoteBook').service('dataService', function() {
         this.quotes.splice(id,1);
     }
 
-
 });
-
-
 
 var quotes = [
     { text: 'Life isn\'t about getting and having, it\'s about giving and being.', author: 'Kevin Kruse'},
