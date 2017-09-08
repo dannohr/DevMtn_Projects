@@ -42,9 +42,20 @@ function noWeakLink() {
   return $http({
     method: 'GET',
     url: '/api/users'
-  })
-  // CODE HERE...
-
+  }).then(function(users) {
+      // console.log(firstUser)
+      firstUser = users.data[0];
+      // console.log('Updated first user: ' + firstUser)
+      return users;
+  
+    }).then(function(users){
+      // console.log(thirdUser)
+      thirdUser = users.data[2];
+      // console.log('Updated third user: ' + thirdUser)
+      // console.log(users.data[9]);
+      return users.data[9];
+    })
+    ;
 }
 
 
@@ -70,11 +81,10 @@ var elephant = {
   name: 'Horton'
 }
 function large() {
-
   return 'My name is ' + this.name + ' and I am very heavy!'
 }
-// CODE HERE...
 
+var boundToElephant = large.bind(elephant);
 
 
 // *************
@@ -88,6 +98,24 @@ function large() {
 // and return the bound function.
 
 // CODE HERE...
+
+function deathStar (capacity, crew){
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -103,6 +131,12 @@ function large() {
 // The closure function will return the combined value of assets and liabilities.
 
 // CODE HERE...
+
+function accountingOffice (assNum) {
+  return function(liaNum) {
+    return assNum + liaNum;
+  }
+}
 
 
 
@@ -129,7 +163,15 @@ function large() {
 
 // CODE HERE...
 
+function forgetter (str) {
 
+  function rememberall (str) {
+    allThings.name = str;
+    allThings.remember.push(str);
+    return allThings;
+  }
+
+}
 
 // *************
 // * PROBLEM 6 *
@@ -156,3 +198,31 @@ function large() {
 // NOTE: Neither hunger nor danger should be able to exceed 100 or drop below 0.
 
 // CODE HERE...
+
+function frodo (startingHungerValue, startingDangerValue) {
+  
+    this.both = {
+      hunger: startingHungerValue,
+      danger: startingDangerValue,
+    },
+
+    this.dinnerOverFire = function(){
+      both.hunger -= 25;
+      both.danger += 40;
+      return both;
+    },
+  
+    this.hdingInBush = function() {
+      both.hunger += 35;
+      both.danger -= 20;
+      return both;
+    }
+  }
+  
+var pleaseWork = new frodo(60,40);
+console.log(pleaseWork)
+
+pleaseWork.dinnerOverFire();
+
+
+

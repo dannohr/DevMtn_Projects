@@ -14,6 +14,11 @@
 
 // CODE HERE...
 
+function callBinding (magicAnimals,updateAnimal,id) {
+
+
+}
+
 
 
 // *************
@@ -27,7 +32,12 @@
 // with the context of the animal, and the array ['being majestic', 'eating rainbows'] as a parameter.
 // return the result of your updateAnimal invocation
 
-// CODE HERE...
+// CODE HERE...]
+
+function applyBinding (magicAnimals, updateAnimal, id) {
+
+
+}
 
 
 
@@ -49,7 +59,10 @@ var foo;
 
 // CODE HERE...
 
+function promiseMe($q) {
 
+
+}
 
 // *************
 // * PROBLEM 4 *
@@ -64,3 +77,8 @@ var foo;
 // and then resolve the array as you complete your promise.
 
 // CODE HERE...
+
+function emailList ($q, $http) {
+
+    
+}
