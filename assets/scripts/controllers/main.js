@@ -6,10 +6,12 @@ angular.module('chattyApp')
       $scope.messages = response.data.messages;
     });
 
-    $scope.addMessage = function ( message ) {
+
+    $scope.addMessage = function ( message, user ) {
       if (message) {
-        messageService.addMessage(message).then(function ( response ) {
+        messageService.addMessage(message, user).then(function ( response ) {
           $scope.messages = response.data.messages;
+          console.log(message)
         });
       }
     };
@@ -19,4 +21,6 @@ angular.module('chattyApp')
       'AngularJS',
       'Karma'
     ];
+
+    $scope.userName = ''
   });
