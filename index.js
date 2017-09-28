@@ -4,8 +4,13 @@ const express = require('express'),
   port = 3000,
   app = express(),
   serverConfig = require('./server/config'),
-  ctrl = require('./server/ctrl.js');
+  ctrl = require('./server/ctrl.js'),
+  massive = require('massive'),
+  connectionString = serverConfig.connectionString;
 
+massive(connectionString).then(db => {
+  app.set('db', db);
+});
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/', express.static(__dirname + '/public'));
