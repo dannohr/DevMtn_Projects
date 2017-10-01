@@ -2,27 +2,22 @@
 const express = require('express');
 // const bodyParser = require('body-parser');
 const { json } = require('body-parser');
-// const massive = require('massive');
 const session = require('express-session');
 const cors = require('cors');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 
-// const config = require('../config');
+
+const { port } = require('../config').port;
 const { secret } = require('../config').session;
-// const { dbUser, dbPass, database } = require('../config').db;
 const { myHost, myDB, myUser, myPass } = require('../config').mySQLdb;
 const { domain, clientID, clientSecret } = require('../config').auth0;
 
+const userCtrl = require('./apiCtrl/userCtrl.js')
+const auth0Login = require('./apiCtrl/auth0Login.js')
+const authCtrl = require('./apiCtrl/authCtrl.js')
+
 const router = express.Router();
-
-// define port
-const port = 3008;
-
-var Model = require('./model');
-
-// our database connection information
-// const connectionString = `postgres://${dbUser}:${dbPass}@localhost/${database}`;
 
 // App Declaration
 const app = express();
@@ -33,48 +28,6 @@ app.use(json());
 app.use(cors());
 app.use(express.static(`${__dirname}/../public`));
 
-// connecting to our DB with massive
-// massive(connectionString).then(db => app.set('db', db));
-        
-var knex = require('knex')({
-    client: 'mysql',
-    connection: {
-        host     : '192.168.2.8',
-        user     : 'user',
-        password : 'mMGUL<&e3A%,E<is',
-        database : 'timetracker'
-    }
-});
-        
-
-const Bookshelf = require('bookshelf')(knex);
-
-var User = Bookshelf.Model.extend({
-    tableName: 'users'
-  });
-  
-
-var Users = Bookshelf.Collection.extend({
-    model: User
-  });
-
-
-
-  app.get('/users', (req, res, next) => {
-        Users.forge()
-            .fetch()
-            .then(function (collection) {
-                console.log('Returned data: ', collection.toJSON())
-                res.json({error: false, data: collection.toJSON()});
-            })
-            .catch(function (err) {
-                console.log(err)
-                console.log('No data')
-            res.status(500).json({error: true, data: {message: err.message}});
-            });
-});
-
-        
 // setting up express sessions
 // secret: config.session.secret;
 app.use(session({
@@ -87,7 +40,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+const { knex } = require('./db/db');
+
 // using passport to access auth0
+
+
 passport.use(new Auth0Strategy({
     domain,
     clientID,
@@ -126,25 +83,33 @@ passport.use(new Auth0Strategy({
  });
 
 
- // General Endpoints
-app.get('/api/test', (req, res, next) => {
-    app.get('db').users.find({}).then(response => {
-        res.json(response);
-    });
+ app.use((req, res, next) => {
+    console.log('REQ BODY', req.body);
+    console.log('REQ QUERY', req.query);
+    console.log('REQ PARAMS', req.params);
+    next();
 });
+
+
+// General Endpoints
+app.get('/api/users', userCtrl.getUsers)
 
 
 
 // auth endpoints
 
 // initial endpoint to fire off login
-app.get('/auth', passport.authenticate('auth0', {scope: 'openid profile'}));
+// app.get('/auth', passport.authenticate('auth0', {scope: 'openid profile'}));
+app.get('/auth', authCtrl.login);
+
+
 
 // redirect to home and use the resolve to catch the user
 app.get('/auth/callback',
     passport.authenticate('auth0', { successRedirect: '/' }), (req, res) => {
         res.status(200).json(req.user);
 });
+
 
 // if not logged in, send error message and catch in resolve
 // else send user
