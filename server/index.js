@@ -7,10 +7,8 @@ const cors = require('cors');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 
-
 const { port } = require('../config').port;
 const { secret } = require('../config').session;
-const { myHost, myDB, myUser, myPass } = require('../config').mySQLdb;
 const { domain, clientID, clientSecret } = require('../config').auth0;
 
 const userCtrl = require('./apiCtrl/userCtrl.js')
@@ -92,6 +90,9 @@ passport.use(new Auth0Strategy({
 
 
 // General Endpoints
+
+// Get All Users, or One User using query
+// Postman: localhost:3008/api/users?id=2
 app.get('/api/users', userCtrl.getUsers)
 
 

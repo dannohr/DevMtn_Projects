@@ -1,14 +1,17 @@
+const { myHost, myDB, myUser, myPass } = require('../../config').mySQLdb;
+
 const knex = require('knex')({
                 client: 'mysql',
                 connection: {
-                    host     : '192.168.2.8',
-                    user     : 'user',
-                    password : 'mMGUL<&e3A%,E<is',
-                    database : 'timetracker'
-                }
+                    host     : myHost,
+                    user     : myUser,
+                    password : myPass,
+                    database : myDB
+                },
+                debug: true
             })
 
-const Bookshelf= require('bookshelf')(knex)
+const Bookshelf = require('bookshelf')(knex)
 
 Bookshelf.plugin('registry');
 

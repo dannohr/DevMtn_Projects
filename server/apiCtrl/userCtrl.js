@@ -1,33 +1,27 @@
 
-const { Users } = require('../db/model.js')
-const getUsers = (req, res, next) => {
+const { User } = require('../db/model.js')
 
-    
+
+const getUsers = function(req, res, next) {
     if (req.query.id) {
-        console.log('finding one')
-        Users.forge()
-        .fetch()
-        .then(function (data) {
-            res.json({error: false, data: data.toJSON()});
+        User.where({id: req.query.id}).fetch()                         
+        .then(function(user) {
+            res.json({ error: false, data: user.toJSON() });
         })
-        .catch(function (err) {
-        res.status(500).json({error: true, data: {message: err.message}});
+        .catch(function(error) {
+            res.status(500).json({ error: true, data: {message: err.message}} );
         });
-    
     } else {
-        console.log('finding all')
-        Users.forge()
-        .fetch()
+        User.fetchAll()
         .then(function (data) {
-            res.json({error: false, data: data.toJSON()});
+            res.json( {error: false, data: data.toJSON() });
         })
         .catch(function (err) {
-        res.status(500).json({error: true, data: {message: err.message}});
-        });}
-        
-  }
-
-
-  module.exports = { 
+        res.status(500).json( {error: true, data: {message: err.message}} );
+        })
+    }
+}
+   
+module.exports = { 
     getUsers
 }
