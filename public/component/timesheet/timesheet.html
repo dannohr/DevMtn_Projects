@@ -1,0 +1,38 @@
+<nav-directive> </nav-directive>
+<h3> This is the timesheet page </h3>
+{{ timesheetTest }}
+
+
+<table border="1" class="table">
+        
+            <tr class="thead-default">
+                <th></th>
+                <th>Project</th>
+                <th>Task</th>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+            </tr>
+            
+            <tbody ng-repeat="entry in timesheet">                                      
+                <tr>
+                    <td><img src="./component/assets/editicon.png" alt="" class = "edit-button" ui-sref="userdetails({id: user.userid})">
+                        <img src="./component/assets/deleteicon.png" alt="" class = "edit-button" ng-click="deleteUser({id: user.userid})"></td>   
+                    <td>{{entry.projectname}}</td>
+                    <td>{{entry.task}}</td>
+                    <td>{{entry.sun}}</td>
+                    <td>{{entry.mon}}</td>
+                    <td>{{entry.tue}}</td>
+                    <td>{{entry.wed}}</td>
+                    <td>{{entry.thu}}</td>
+                    <td>{{entry.fri}}</td>
+                    <td>{{entry.sat}}</td>
+                </tr>
+
+            </tbody>
+        
+        </table>

@@ -5,15 +5,19 @@ const { json } = require('body-parser');
 const session = require('express-session');
 const cors = require('cors');
 const passport = require('passport');
-const Auth0Strategy = require('passport-auth0');
+// const Auth0Strategy = require('passport-auth0');
+const authType = 'Auth0';
+
 
 const { port } = require('../config').port;
 const { secret } = require('../config').session;
-const { domain, clientID, clientSecret } = require('../config').auth0;
+// const { domain, clientID, clientSecret } = require('../config').auth0;
 
-const userCtrl = require('./apiCtrl/userCtrl.js')
-const auth0Login = require('./apiCtrl/auth0Login.js')
-const authCtrl = require('./apiCtrl/authCtrl.js')
+const apiCtrl = require('./apiCtrl/apiCtrl.js')
+// const auth0Login = require('./apiCtrl/auth0Login.js')
+// const authCtrl = require('./apiCtrl/authCtrl.js')
+
+const flash = require("connect-flash");
 
 const router = express.Router();
 
@@ -38,48 +42,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-const { knex } = require('./db/db');
+app.use(flash());
 
-// using passport to access auth0
-
-
-passport.use(new Auth0Strategy({
-    domain,
-    clientID,
-    clientSecret,
-    callbackURL:  '/auth/callback'
-   }, (accessToken, refreshToken, extraParams, profile, done) => {
-        knex('users').where('authid', profile._json.sub)
-        .then((user, err) => {
-            if (!user[0]) { //if there isn't a user, we'll create one!
-                console.log('CREATING USER');
-                knex('users').insert({username: profile.nickname, authid: profile._json.sub})
-                .then((res) => {
-                    return knex('users').where('id',res) })
-                    .then((res, err) => {
-                    console.log('USER CREATED', res[0]);
-                    return done(err, res[0]); // GOES TO SERIALIZE USER
-                })
-            } else { //when we find the user, return it
-                console.log('FOUND USER', user[0]);
-                return done(err, user[0]);
-            }
-        });
-   }
- ) 
-);
-
- // put user on session
- passport.serializeUser((user, done) => {
-     done(null, user);
- });
-
- // pull user from session for manipulation
- passport.deserializeUser((user, done) => {
-    //  console.log(user);
-     done(null, user);
- });
-
+require('./passport')(passport); // pass passport for configuration
 
  app.use((req, res, next) => {
     console.log('REQ BODY', req.body);
@@ -91,30 +56,43 @@ passport.use(new Auth0Strategy({
 
 // General Endpoints
 
-// Get All Users, or One User using query
-// Postman: localhost:3008/api/users?id=2
-app.get('/api/users', userCtrl.getUsers)
+app.get('/api/users', apiCtrl.getUsers)
+app.post('/api/users', apiCtrl.postUser)
+app.delete('/api/users', apiCtrl.deleteUser)
+app.put('/api/users', apiCtrl.updateUser)
+app.get('/api/userstatus', apiCtrl.getUserStatus)
 
+app.get('/api/projects', apiCtrl.getProjects)
+app.post('/api/projects', apiCtrl.postProject)
+app.delete('/api/projects', apiCtrl.deleteProject)
+app.put('/api/projects', apiCtrl.updateProject)
+app.get('/api/projStatus', apiCtrl.getProjStatus)
+app.get('/api/projType', apiCtrl.getProjType)
 
+app.get('/api/timesheet', apiCtrl.getWeekTimeSheet)
 
 // auth endpoints
 
-// initial endpoint to fire off login
-// app.get('/auth', passport.authenticate('auth0', {scope: 'openid profile'}));
-app.get('/auth', authCtrl.login);
-
-
+// initial endpoint to fire off login screen
+app.get('/auth0', passport.authenticate('auth0', {scope: 'openid profile'}));
 
 // redirect to home and use the resolve to catch the user
-app.get('/auth/callback',
+app.get('/auth0/callback',
     passport.authenticate('auth0', { successRedirect: '/' }), (req, res) => {
         res.status(200).json(req.user);
+});
+
+app.post('/login',
+passport.authenticate('login', { successRedirect: '/' }), (req, res) => {
+    res.status(200).json(req.user);
+    
 });
 
 
 // if not logged in, send error message and catch in resolve
 // else send user
 app.get('/auth/me', (req, res) => {
+    console.log('checked to see if logged in coming from index.js')
     if (!req.user) return res.status(401).json({err: 'User Not Authenticated'});
     res.status(200).json(req.user);
 });
