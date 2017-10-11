@@ -1,7 +1,5 @@
-angular.module('fullstack', ['angularMoment','ui.router']);
-
-
-
+angular.module('fullstack', ['ui.router', "ngAnimate","ngMaterial"]);
+// angular.module('fullstack', ['ui.router','ngMaterial','ngMessages']);
 $(document).ready(function () {
     
             // Change Highlight On Nav menu, based on what was clicked

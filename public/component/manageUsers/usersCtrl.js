@@ -11,6 +11,7 @@ angular.module('fullstack').controller('usersCtrl', function($scope, user, $http
     }
     
     $scope.getUsers()
+
     
     $scope.deleteUser = function (id) {
         usersService.delete(id.id).then(function (response) {

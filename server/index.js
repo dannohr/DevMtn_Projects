@@ -5,17 +5,15 @@ const { json } = require('body-parser');
 const session = require('express-session');
 const cors = require('cors');
 const passport = require('passport');
-// const Auth0Strategy = require('passport-auth0');
 const authType = 'Auth0';
+const moment = require('moment');
 
+console.log('Current Time is: ',moment().format('MMMM Do YYYY, h:mm'));
 
 const { port } = require('../config').port;
 const { secret } = require('../config').session;
-// const { domain, clientID, clientSecret } = require('../config').auth0;
 
 const apiCtrl = require('./apiCtrl/apiCtrl.js')
-// const auth0Login = require('./apiCtrl/auth0Login.js')
-// const authCtrl = require('./apiCtrl/authCtrl.js')
 
 const flash = require("connect-flash");
 
@@ -68,8 +66,10 @@ app.delete('/api/projects', apiCtrl.deleteProject)
 app.put('/api/projects', apiCtrl.updateProject)
 app.get('/api/projStatus', apiCtrl.getProjStatus)
 app.get('/api/projType', apiCtrl.getProjType)
+app.get('/api/projTask', apiCtrl.getProjTask)
 
 app.get('/api/timesheet', apiCtrl.getWeekTimeSheet)
+app.post('/api/timesheet', apiCtrl.postTimeSheetEntry)
 
 // auth endpoints
 

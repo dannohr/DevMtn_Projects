@@ -1,7 +1,7 @@
 
 // _____  API ______ // 
 
-const { User, UserStatus, Project, ProjectType, ProjectStatus } = require('../db/model.js')
+const { User, UserStatus, Project, ProjectType, ProjectStatus, TimeEntry, Task } = require('../db/model.js')
 const { knex, Bookshelf } = require('../db/db.js');
 const bcrypt   = require('bcrypt-nodejs');
 
@@ -87,6 +87,7 @@ const getUserStatus = function(req, res, next) {
     })
 }
 
+
 const getProjects = function(req, res, next) {
     if (req.query.id) {
         Project.where({projectid: req.query.id}).fetch()                         
@@ -96,7 +97,16 @@ const getProjects = function(req, res, next) {
             .catch(function(err) {
                 res.status(500).json({ error: true, data: {message: err.message}} );
             });
-
+    } else
+    if (req.query.status) {
+        Project.where({projectstatusid: req.query.status})
+            .fetchAll()                         
+            .then(function(project) {
+                res.json({ error: false, data: project.toJSON() });
+            })
+            .catch(function(err) {
+                res.status(500).json({ error: true, data: {message: err.message}} );
+            });
     } else {
         Project.fetchAll()
             .then(function (data) {
@@ -174,27 +184,30 @@ const getWeekTimeSheet = function(req, res, next) {
             userid: req.query.id,
             firstdayofweek: req.query.week
         })
-    // knex.raw(`
-    //             SELECT	te.timeentryid,
-    //             p.projectname,
-    //             t.task,
-    //             CASE WHEN dayofweek(taskdate) = 1 then taskhours END as sun,
-    //             CASE WHEN dayofweek(taskdate) = 2 then taskhours END as mon,
-    //             CASE WHEN dayofweek(taskdate) = 3 then taskhours END as tue,
-    //             CASE WHEN dayofweek(taskdate) = 4 then taskhours END as wed,
-    //             CASE WHEN dayofweek(taskdate) = 5 then taskhours END as thu,
-    //             CASE WHEN dayofweek(taskdate) = 6 then taskhours END as fri,
-    //             CASE WHEN dayofweek(taskdate) = 7 then taskhours END as sat,
-    //             DATE_ADD(taskdate, INTERVAL(1-DAYOFWEEK(taskdate)) DAY) as firstdayofweek
+    .then(function (data) {
+        res.json(data);
+    })
+    .catch(function (err) {
+    res.status(500).json( {error: true, data: {message: err.message}} );
+    })
+}
 
-    //             FROM timeentry te
-    //             JOIN project p on te.projectid = p.projectid
-    //             JOIN task t on te.taskid = t.taskid
+const postTimeSheetEntry = function(req, res, next) {
+    new TimeEntry({
+        userid: req.body.userid,
+        projectid: req.body.projectid,
+        taskid: req.body.taskid,
+        taskhours: req.body.taskhours,
+        taskdate: req.body.taskdate
+      })
+        .save()
+        .then(function(saved) {
+          res.json({ saved });
+        });
+}
 
-    //             WHERE DATE_ADD(taskdate, INTERVAL(1-DAYOFWEEK(taskdate)) DAY) = '2017-10-08' 
-    //             and te.userid = 77
-    //         `)
-    
+const getProjTask = function(req, res, next) {
+    Task.fetchAll()
     .then(function (data) {
         res.json(data);
     })
@@ -218,5 +231,7 @@ module.exports = {
     updateProject,
     getProjStatus,
     getProjType,
-    getWeekTimeSheet
+    getWeekTimeSheet,
+    postTimeSheetEntry,
+    getProjTask
 }
