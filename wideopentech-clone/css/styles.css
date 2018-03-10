@@ -1,0 +1,68 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Oswald', Georgia, Serif;
+}
+
+.top-area {
+    background-image: url("/img/wot-masthead-dark.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 515px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.top-navbar {
+    padding: 20px;
+}
+
+.top-area-large-text-center {
+    color: white;
+    font-size: 150px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.top-area-small-text-left  {
+    color: white;
+    font-size: 20px;
+    text-align: left;
+}
+
+.top-area-small-text-center  {
+    color: white;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.upper-text {
+    margin-top: 15px;
+} 
+
+.learn-more {
+    background-color: #C8E23A;
+    height: 50px;
+    border-radius: 25px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+
+}
+
+.logo {
+    float: left;
+}
+
+.menu-button {
+    float: right;
+    height: 20px;
+    width: 20px;
+    background-color: black;
+}
+
