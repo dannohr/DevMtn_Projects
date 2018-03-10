@@ -32,7 +32,7 @@ git clone https://github.com/${ACCOUNT}/${1}
 cd $1
 mkdir $1
 for file in $(git ls-files | sed -e 's/\/.*$//' | uniq); do git mv $file $1; done
-git commit -m "Prepare ${1} for storage in attic."
+git commit -m "Prepare ${1} to move to DevMtn_Projects Repo."
 
 echo Pulling to attic from $STARTING_DIR
 cd $STARTING_DIR
