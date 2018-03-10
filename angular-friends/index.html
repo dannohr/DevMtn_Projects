@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Angular Friends</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body ng-app = "myApp">
+  <h1>The <strong>facebook</strong> Friend Machine</h1>
+
+  <div class="friends" ng-controller="FriendCtrl">
+      
+    <form class="form-inline searchForm" role="form">
+      <div class="form-group">
+        <input class="form-control" placeholder="Search Name" ng-model="searchTerm.name">              
+        <input class="form-control" placeholder="Search State" ng-model="searchTerm.location.state">   
+
+        <!-- <input class="form-control" placeholder="Search Name" ng-model="searchTermName">        another way to filter
+        <input class="form-control" placeholder="Search State" ng-model="searchTermLocation">        another way to filter -->
+        <hr>
+        <p>Orignal Code (Not Working Now)</p>
+        <select class="input-medium" ng-model="sortByName">
+          <option value='name'>Name</option>
+          <option value='friend_count'>#Friends</option>
+          <option value='location.city'>City</option>
+          <option value='location.state'>State</option>
+          <option value='location.country'>Country</option>
+        </select>
+
+        <select class="input-medium" ng-model="sortDirection">
+            <option value="-">Descending</option>
+            <option value="+">Ascending</option>
+          </select>
+        <hr>
+        <p>New, using ng-options to create filter options</p>
+        <select ng-options="item.id as item.value for item in sortItemList" ng-model="newSort">{{value}}</select>
+        <select ng-options="item.id as item.value for item in sortDirectionList" ng-model="newOrder">{{value}}</select>
+
+
+      </div>
+    </form>
+
+    <ul>
+      <li class='friend' ng-repeat="friend in friends  | filter: searchTerm | orderBy: newOrder + newSort">
+      <!-- <li class='friend' ng-repeat="friend in friends  | filter: {location:{state: searchTermLocation}, name: searchTermName}">  Another way to filter -->
+        <img class="profile-pic" ng-src={{friend.pic_square}}>
+        <h3> {{friend.name}} </h3>
+        <div class="location">
+          Location: {{friend.location.city}}, {{friend.location.state}}, {{friend.location.country}}
+        </div>
+        <div class="status">
+          Status: {{friend.status}}
+        </div>
+        <div class="num-friends">
+          Friends: {{friend.friend_count}}
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.js"></script>
+  <script src="./app.js"></script>
+  <script src="./FriendCtrl.js"></script>
+</body>
+</html>
